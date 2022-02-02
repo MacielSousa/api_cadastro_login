@@ -1,10 +1,10 @@
-import "reflect-metadata";
 import upload from "@config/upload";
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 
 import "@shared/container";
+import "reflect-metadata";
 
 import createConnection from "@shared/infra/typeorm";
 
