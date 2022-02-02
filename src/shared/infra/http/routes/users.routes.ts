@@ -1,4 +1,5 @@
 import { CreateUserController } from "@modules/accounts/userCase/createUser/CreateUserController";
+import { ProfileUserController } from "@modules/accounts/userCase/profileUserUseCase/ProfileUserController";
 import { UpdateUserAvatarController } from "@modules/accounts/userCase/updateUserAvatar/UpdateUserAvatarController";
 
 import { Router } from "express";
@@ -14,6 +15,7 @@ const uploadAvatar = multer(uploadConfig);
 
 const createUserController = new CreateUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
+const profileUserController = new ProfileUserController();
 
 usersRoutes.post("/", createUserController.handle);
 
@@ -23,5 +25,6 @@ usersRoutes.patch("/avatar",
  updateUserAvatarController.handle
  );
 
+ usersRoutes.get("/profile", ensureAuthenticated, profileUserController.handle);
  
 export { usersRoutes };
