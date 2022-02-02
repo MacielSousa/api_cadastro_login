@@ -1,0 +1,15 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "System Login Documentation",
+        "description": "This is an API Login",
+        "version": "1.0.0",
+        "contact":{
+            "email": "fmacielsousa@gmail.com"
+        }
+    },
+    "paths": {
+    },
+    "definitions": {
+    }
+}
