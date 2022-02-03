@@ -9,7 +9,262 @@
         }
     },
     "paths": {
+        "/users":{
+            "post": {
+                "tags": ["Users"],
+                "summary": "",
+                "description": "Create an account",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                 "$ref": "#/definitions/User" 
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Account already exists!"
+                    }
+                }
+            }
+        },
+        "/password/reset": {
+            "patch":{
+                "tags": ["Users"],
+                "summary": "Reset Password",
+                "description": "Reset Password user",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "current_password": {
+                                        "type": "string"
+                                    },
+                                    "new_password": {
+                                        "type": "string"
+                                    },
+                                    "confirm_new_password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Invalid token!"
+                    }
+                }
+            }
+        },
+        "/users/profile": {
+            "put":{
+                "tags": ["Users"],
+                "summary": "Edite Profile",
+                "description": "Edite Profile user",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Invalid token!"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "Profile",
+                "description": "Profile User",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/definitions/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/avatar": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Upload Images Profile",
+                "description": "Upload Image Profile user",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema":{
+                                "type":  "object",
+                                "properties": {
+                                   "avatar":{
+                                        "type":  "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        } 
+                                   }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description":  "Created"
+                    }
+                }
+            }
+        },
+        "/sessions": {
+            "post":{
+                "tags": ["Authenticate"],
+                "summary": "Authentication user",
+                "description": "Authentication user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Email or password incorrect!"
+                    }
+                }
+            }
+        },
+        "/refresh-token": {
+            "post":{
+                "tags": ["Authenticate"],
+                "summary": "Refresh Token",
+                "description": "Refresh Token user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Refresh Token does not exists!"
+                    }
+                }
+            }
+        }
     },
     "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+            }
+          },
+          "Profile": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "avatar_url": {
+                    "type": "string"
+                }
+            }
+          }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "beareFormat": "JWT"
+            }
+        }
     }
 }

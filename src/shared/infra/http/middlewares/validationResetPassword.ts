@@ -7,7 +7,9 @@ export async function validationResetPassword(request: Request, response: Respon
     try{ 
        const body = await request.body;
        const schema = await Yup.object().shape({
-            password: Yup.string().min(6).required()
+        current_password: Yup.string().min(6).required(),
+        new_password: Yup.string().min(6).required(),
+        confirm_new_password: Yup.string().min(6).required()
        });
        await schema.validate(body);
        next();
