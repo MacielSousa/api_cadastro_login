@@ -1,8 +1,8 @@
 # API Cadastro e Login
  
-## API de Cadastro e Login de Usuario.
+## API de Cadastro e Login de Usuário.
  
-### Comandos para Executar esse projeto
+### Comandos para Executar esse projeto:
  #### yarn
  #### docker-compose up --force-recreate
  #### yarn typeorm migration:run
